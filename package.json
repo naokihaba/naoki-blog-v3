@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pnpm pagefind",
+    "pagefind": "pagefind --site dist --output-path dist/pagefind",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "wrangler deploy",
@@ -23,6 +24,9 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.90",
+    "pagefind": "^1.4.0",
+    "satori": "^0.19.2",
+    "sharp": "^0.34.5",
     "wrangler": "^4.65.0"
   }
 }

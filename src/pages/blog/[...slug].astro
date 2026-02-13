@@ -82,7 +82,7 @@ const readingTime = calculateReadingTime(post.body);
   </div>
 
   <!-- Content -->
-  <article class="mx-auto px-4 py-16" style="max-width: 56rem;">
+  <article class="mx-auto px-4 py-16" style="max-width: 56rem;" data-pagefind-body>
     <!-- Table of Contents -->
     <TableOfContents headings={headings} />
 
@@ -123,3 +123,4 @@ const readingTime = calculateReadingTime(post.body);
 </script>
 
 <script src="../../scripts/code-copy.ts"></script>
+<script src="../../scripts/reading-progress.ts"></script>

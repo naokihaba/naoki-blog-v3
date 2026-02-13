@@ -1,0 +1,199 @@
+---
+import { Icon } from 'astro-icon/components';
+
+// Disable search in development
+const isDev = import.meta.env.DEV;
+---
+
+{!isDev && (
+<div id="search-container" class="relative">
+  <!-- Search Button -->
+  <button
+    id="search-button"
+    class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all hover:scale-105"
+    style="background-color: var(--color-surface-elevated); color: var(--color-text-primary); border: 1px solid var(--color-border);"
+    aria-label="検索"
+  >
+    <Icon name="lucide:search" class="size-4" />
+    <span class="hidden sm:inline">検索</span>
+    <kbd class="ml-2 hidden sm:inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs" style="background-color: var(--color-surface-secondary); color: var(--color-text-secondary);">
+      ⌘K
+    </kbd>
+  </button>
+
+  <!-- Search Modal -->
+  <div
+    id="search-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+    style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);"
+  >
+    <div
+      class="glass-card relative w-full max-w-2xl rounded-2xl p-6 shadow-2xl"
+      style="max-height: 80vh; overflow: hidden;"
+    >
+      <!-- Search Input -->
+      <div class="mb-4 flex items-center gap-3 rounded-xl px-4 py-3" style="background-color: var(--color-surface-elevated); border: 2px solid var(--color-border);">
+        <Icon name="lucide:search" class="size-5" style="color: var(--color-primary);" />
+        <input
+          id="search-input"
+          type="text"
+          placeholder="記事を検索..."
+          class="flex-1 bg-transparent text-lg outline-none"
+          style="color: var(--color-text-primary);"
+          autofocus
+        />
+        <button
+          id="search-close"
+          class="rounded-lg p-1 transition-colors hover:bg-opacity-20"
+          style="color: var(--color-text-secondary);"
+          aria-label="閉じる"
+        >
+          <Icon name="lucide:x" class="size-5" />
+        </button>
+      </div>
+
+      <!-- Search Results -->
+      <div id="search-results" class="overflow-y-auto" style="max-height: 60vh;">
+        <div class="py-12 text-center" style="color: var(--color-text-secondary);">
+          キーワードを入力して検索
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+)}
+
+{!isDev && (
+<script>
+  // @ts-ignore
+  import type { PagefindInstance } from 'pagefind';
+
+  declare global {
+    interface Window {
+      pagefind?: PagefindInstance;
+    }
+  }
+
+  const searchButton = document.getElementById('search-button');
+  const searchModal = document.getElementById('search-modal');
+  const searchClose = document.getElementById('search-close');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchResults = document.getElementById('search-results');
+
+  let pagefind: PagefindInstance | null = null;
+
+  // Load Pagefind
+  async function loadPagefind() {
+    if (!pagefind) {
+      try {
+        // Check if pagefind exists (only in production)
+        const response = await fetch('/pagefind/pagefind.js', { method: 'HEAD' });
+        if (!response.ok) {
+          throw new Error('Pagefind not found');
+        }
+        // @ts-ignore
+        pagefind = await import('/pagefind/pagefind.js');
+        await pagefind.init();
+      } catch (error) {
+        console.warn('Pagefind not available. Run "pnpm build" to enable search.');
+        if (searchResults) {
+          searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">検索機能を使用するには、<code style="background: var(--color-surface-elevated); padding: 0.25rem 0.5rem; border-radius: 0.25rem;">pnpm build</code> を実行してください</div>';
+        }
+      }
+    }
+  }
+
+  // Open modal
+  function openModal() {
+    searchModal?.classList.remove('hidden');
+    searchModal?.classList.add('flex');
+    searchInput?.focus();
+    loadPagefind();
+  }
+
+  // Close modal
+  function closeModal() {
+    searchModal?.classList.add('hidden');
+    searchModal?.classList.remove('flex');
+    if (searchInput) searchInput.value = '';
+    if (searchResults) {
+      searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">キーワードを入力して検索</div>';
+    }
+  }
+
+  // Search
+  async function performSearch(query: string) {
+    if (!query.trim() || !searchResults) return;
+
+    if (!pagefind) {
+      searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">検索機能は本番ビルド後に利用可能です</div>';
+      return;
+    }
+
+    searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">検索中...</div>';
+
+    try {
+      const results = await pagefind.search(query);
+
+      if (results.results.length === 0) {
+        searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">結果が見つかりませんでした</div>';
+        return;
+      }
+
+      const data = await Promise.all(
+        results.results.slice(0, 10).map((r: any) => r.data())
+      );
+
+      searchResults.innerHTML = data
+        .map(
+          (item: any) => `
+          <a
+            href="${item.url}"
+            class="block rounded-xl p-4 transition-all hover:-translate-y-1 hover:shadow-lg mb-3"
+            style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);"
+          >
+            <h3 class="font-bold mb-2" style="color: var(--color-text-primary);">
+              ${item.meta?.title || 'Untitled'}
+            </h3>
+            <p class="text-sm line-clamp-2" style="color: var(--color-text-secondary);">
+              ${item.excerpt || ''}
+            </p>
+          </a>
+        `
+        )
+        .join('');
+    } catch (error) {
+      console.error('Search error:', error);
+      searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">検索エラーが発生しました</div>';
+    }
+  }
+
+  // Event listeners
+  searchButton?.addEventListener('click', openModal);
+  searchClose?.addEventListener('click', closeModal);
+  searchModal?.addEventListener('click', (e) => {
+    if (e.target === searchModal) closeModal();
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    // Cmd/Ctrl + K to open
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openModal();
+    }
+    // Escape to close
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+
+  // Search input
+  let debounceTimeout: ReturnType<typeof setTimeout>;
+  searchInput?.addEventListener('input', (e) => {
+    clearTimeout(debounceTimeout);
+    const query = (e.target as HTMLInputElement).value;
+    debounceTimeout = setTimeout(() => performSearch(query), 300);
+  });
+</script>
+)}

@@ -9,6 +9,13 @@ import rehypeFaviconLinks from './src/plugins/rehype-favicon-links.js';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nao-dev.netlify.app/', // あなたのサイトURLに変更してください
+  i18n: {
+    defaultLocale: 'ja',
+    locales: ['ja', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     mdx({
       rehypePlugins: [rehypeFaviconLinks],
@@ -22,5 +29,10 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        external: ['/pagefind/pagefind.js'],
+      },
+    },
   },
 });

@@ -6,14 +6,18 @@ import LayoutFooter from '../components/LayoutFooter.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
 }
 
 const {
   title = 'nao.dev',
   description = 'Front-end Developer loving Vue ecosystem. 技術のこと、日々のこと、思いついたことを綴るブログ',
+  ogImage,
 } = Astro.props;
 
 const fullTitle = title === 'nao.dev' ? title : `${title} | nao.dev`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/favicon.svg', Astro.site);
 ---
 
 <!doctype html>
@@ -25,6 +29,25 @@ const fullTitle = title === 'nao.dev' ? title : `${title} | nao.dev`;
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="nao.dev" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@naokihaba" />
+    <meta name="twitter:creator" content="@naokihaba" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- ダークモード初期化スクリプト（FOUC防止） -->
     <script is:inline>

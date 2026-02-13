@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import Search from './Search.astro';
 
 const navLinks = [
   { label: 'Blog', href: '/' },
@@ -44,6 +45,8 @@ const currentPath = Astro.url.pathname;
       })}
 
       <div class="mx-2 h-6 w-px" style="background-color: var(--color-border);"></div>
+
+      <Search />
 
       <a
         href="/rss.xml"
