@@ -34,9 +34,12 @@ function calculateReadingTime(content: string): number {
 }
 
 const readingTime = calculateReadingTime(post.body);
+
+// OGP画像のURLを生成
+const ogImageUrl = `/og/${post.slug}.png`;
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.data.title} description={post.data.description} ogImage={ogImageUrl}>
   <!-- Hero Section with Gradient Background -->
   <div class="relative overflow-hidden">
     <div class="absolute inset-0 opacity-20" style="background: var(--gradient-primary);"></div>

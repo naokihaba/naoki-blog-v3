@@ -157,7 +157,7 @@ const prefectureName = user.prefecture.name
 
 ### Null/Undefinedの扱い
 
-データベースでNULL許可する場合は、Transformerでもそれを考慮する必要があります。
+データベースでNULL許可する場合は、Transformerでもそれを考慮してください。
 
 ```ts
 @Column('tinyint', {
@@ -188,7 +188,7 @@ const users = await userRepository
 
 ## まとめ
 
-TypeORMのTransformer機能を使うことで：
+TypeORMのTransformer機能を使うことで、次のメリットがあります。
 
 - データベースとアプリケーション間のデータ変換を自動化
 - 型安全性とコードの可読性が向上

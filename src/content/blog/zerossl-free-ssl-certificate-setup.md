@@ -19,7 +19,7 @@ ZeroSSLは、Let's Encryptと同様に無料でSSL証明書を発行できるサ
 
 ### Let's Encryptとの違い
 
-[Scott Helme氏の記事](https://scotthelme.co.uk/introducing-another-free-ca-as-an-alternative-to-lets-encrypt/)では、以下のように述べられています：
+[Scott Helme氏の記事](https://scotthelme.co.uk/introducing-another-free-ca-as-an-alternative-to-lets-encrypt/)では、以下のように述べられています。
 
 > Let's Encryptは、証明書を無料で大規模に提供することで、素晴らしい活動をしている素晴らしい組織です。しかし、問題は、長い間、そのような組織は彼らだけだったということです。他の選択肢を持つことは常に良いアイデアです。
 
@@ -71,10 +71,10 @@ ZeroSSLは、Let's Encryptと同様に無料でSSL証明書を発行できるサ
 **手順：**
 1. 「DNS (CNAME)」を選択
 2. 表示されたCNAMEレコードをメモ
-3. Cloud DNSまたは使用中のDNSサービスに以下を追加：
-   - **名前**: `_acme-challenge.example.com`
-   - **タイプ**: CNAME
-   - **値**: ZeroSSLが提供した値
+3. Cloud DNSまたは使用中のDNSサービスに以下を追加
+   - **名前** `_acme-challenge.example.com`
+   - **タイプ** CNAME
+   - **値** ZeroSSLが提供した値
 4. DNSの反映を待つ（数分〜最大48時間）
 5. 「Verify Domain」をクリック
 
@@ -88,7 +88,7 @@ Webサーバーに検証ファイルを配置する方法です。
 
 ### 6. 証明書のダウンロード
 
-認証が完了すると、以下のファイルをダウンロードできます：
+認証が完了すると、以下のファイルをダウンロードできます。
 
 - `certificate.crt` - 証明書本体
 - `ca_bundle.crt` - 中間証明書
@@ -102,10 +102,10 @@ Webサーバーに検証ファイルを配置する方法です。
 2. 対象のロードバランサーを選択
 3. 「編集」をクリック
 4. 「フロントエンド構成」セクションで「証明書を追加」をクリック
-5. 以下を入力：
-   - **名前**: 任意の証明書名
-   - **証明書**: `certificate.crt`と`ca_bundle.crt`を結合した内容
-   - **秘密鍵**: `private.key`の内容
+5. 以下を入力
+   - **名前** 任意の証明書名
+   - **証明書** `certificate.crt`と`ca_bundle.crt`を結合した内容
+   - **秘密鍵** `private.key`の内容
 
 **証明書の結合方法：**
 
@@ -119,10 +119,10 @@ cat certificate.crt ca_bundle.crt > fullchain.crt
 
 1. 「ネットワークサービス > Cloud DNS」を開く
 2. 対象のDNSゾーンを選択
-3. Aレコードを追加：
-   - **名前**: `example.com`
-   - **タイプ**: A
-   - **データ**: Cloud Load BalancingのIPアドレス
+3. Aレコードを追加
+   - **名前** `example.com`
+   - **タイプ** A
+   - **データ** Cloud Load BalancingのIPアドレス
 
 ### 3. 動作確認
 
