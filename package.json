@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "wrangler deploy",
-    "deploy:build": "pnpm build && pnpm deploy"
+    "deploy:build": "pnpm build && pnpm deploy",
+    "lint:text": "textlint \"src/content/**/*.{md,mdx}\"",
+    "lint:text:fix": "textlint --fix \"src/content/**/*.{md,mdx}\""
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -24,9 +26,11 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.90",
+    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
     "pagefind": "^1.4.0",
     "satori": "^0.19.2",
     "sharp": "^0.34.5",
+    "textlint": "^15.5.1",
     "wrangler": "^4.65.0"
   }
 }

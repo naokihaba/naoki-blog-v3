@@ -9,8 +9,6 @@ tags:
   - tech-stack
 ---
 
-import LinkCard from '../../components/LinkCard.astro';
-
 ## 個人ブログを始めました
 
 これまで Zenn などのプラットフォームで記事を書いてきましたが、自分のドメインで自由に発信できる場所が欲しくなり、このブログを立ち上げました。
@@ -36,13 +34,12 @@ import LinkCard from '../../components/LinkCard.astro';
 **その他**
 - **astro-icon** - Iconifyベースのアイコンシステム
 - **@astrojs/sitemap** - SEO最適化
-- **rehype-favicon-links** - カスタムプラグイン
+- **Pagefind** - 静的サイト向け高速検索
+- **textlint** - 日本語文章の品質チェック
 
 ## Astro 5 + Content Collections
 
-フレームワークとして Astro 5 を採用しています。
-
-<LinkCard url="https://astro.build" />
+フレームワークとして [Astro 5](https://astro.build) を採用しています。
 
 Astro を選んだ理由は以下のとおりです：
 
@@ -125,9 +122,7 @@ HTMLライクなシンプルな構文で、型安全なコンポーネントを�
 
 ## Tailwind CSS v4
 
-スタイリングには Tailwind CSS v4 を採用しています。
-
-<LinkCard url="https://tailwindcss.com" />
+スタイリングには [Tailwind CSS v4](https://tailwindcss.com) を採用しています。
 
 Tailwind CSS v4 の主な特徴：
 
@@ -255,6 +250,45 @@ export default defineConfig({
 - **マイクロインタラクション** - ホバー時の浮き上がり効果、スムーズなトランジション
 - **読みやすさ重視** - 広い行間（2.0）、適切なフォントサイズ
 - **ダークモード完全対応** - システム設定に応じた自動切り替え
+
+## 全文検索 - Pagefind
+
+ブログ内の記事を高速に検索できるよう、[Pagefind](https://pagefind.app/) を導入しています。
+
+Pagefindは静的サイト向けの全文検索ライブラリで、以下の特徴があります：
+
+- **完全静的** - サーバー不要で動作
+- **超軽量** - 検索インデックスが自動的に最適化
+- **多言語対応** - 日本語検索も完全サポート
+- **ゼロ設定** - ビルド時に自動的にインデックス生成
+
+```bash
+# ビルド時にインデックス生成
+pnpm pagefind --site dist --output-path dist/pagefind
+```
+
+検索UIは⌘K（Ctrl+K）で開くモーダル形式で、リアルタイムに検索結果が表示されます。
+
+## 文章品質管理 - textlint
+
+ブログ記事の品質を保つため、[textlint](https://textlint.github.io/) を導入しています。
+
+`@textlint-ja/textlint-rule-preset-ai-writing` プリセットを使用することで、以下をチェックできます：
+
+- **重複表現** - 同じ言葉の繰り返しを検出
+- **冗長な表現** - 不要な言い回しを指摘
+- **ら抜き言葉** - 文法的な誤りをチェック
+- **表記ゆれ** - 表記の統一性を確認
+
+```bash
+# 記事をチェック
+pnpm lint:text
+
+# 自動修正
+pnpm lint:text:fix
+```
+
+AI技術を活用したルールセットにより、より自然で読みやすい文章を書けるようになります。
 
 ## パフォーマンス
 
