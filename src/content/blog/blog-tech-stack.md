@@ -36,7 +36,6 @@ tags:
 - **astro-icon** - Iconifyベースのアイコンシステム
 - **@astrojs/sitemap** - SEO最適化
 - **@astrojs/rss** - RSSフィード生成
-- **Pagefind** - 静的サイト向け高速検索
 - **textlint** - 日本語文章の品質チェック
 - **satori + sharp** - 動的OGP画像生成
 - **wrangler** - Cloudflare Workersへのデプロイ
@@ -310,24 +309,6 @@ export default defineConfig({
 - **読みやすさ重視** - 広い行間（2.0）、適切なフォントサイズ
 - **ダークモード完全対応** - システム設定に応じた自動切り替え
 
-## 全文検索 - Pagefind
-
-ブログ内の記事を高速に検索できるよう、[Pagefind](https://pagefind.app/) を導入しています。
-
-Pagefindは静的サイト向けの全文検索ライブラリで、以下の特徴があります
-
-- **完全静的** - サーバー不要で動作
-- **超軽量** - 検索インデックスが自動的に最適化
-- **多言語対応** - 日本語検索も完全サポート
-- **ゼロ設定** - ビルド時に自動的にインデックス生成
-
-```bash
-# ビルド時にインデックス生成
-pnpm pagefind --site dist --output-path dist/pagefind
-```
-
-検索UIは⌘K（Ctrl+K）で開くモーダル形式で、リアルタイムに検索結果が表示されます。
-
 ## 文章品質管理 - textlint
 
 ブログ記事の品質を保つため、[textlint](https://textlint.github.io/) を導入しています。
@@ -389,8 +370,6 @@ Astro 5 と Tailwind CSS v4 の組み合わせにより、超高速でモダン�
 - **Content Collections** - 型安全な記事管理
 - **動的OGP画像生成** - satoriとsharpによる美しいOGP画像
 - **RSSフィード** - 購読者のための標準サポート
-- **Pagefind** - 静的サイト向け高速検索
-- **Cloudflare Workers** - エッジでの超高速配信
 - **モダンなデザインシステム** - ダークモード完全対応
 
 これらの技術により、快適な執筆・閲覧体験を実現しています。
