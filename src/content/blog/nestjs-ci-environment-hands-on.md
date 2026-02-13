@@ -73,7 +73,7 @@ curl http://localhost:3000
 
 ### NestJSの基本構造
 
-NestJSは以下のコンポーネントで構成されます：
+NestJSは以下のコンポーネントで構成されます
 
 #### main.ts - エントリーポイント
 

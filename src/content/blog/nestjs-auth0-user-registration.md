@@ -30,7 +30,7 @@ npm install -D @types/auth0
 
 ### 2. Auth0でアプリケーションを作成
 
-Auth0ダッシュボードで**Machine to Machine Application**を作成し、以下の情報を取得します：
+Auth0ダッシュボードで**Machine to Machine Application**を作成し、以下の情報を取得します
 
 - **Domain**: `your-tenant.auth0.com`
 - **Client ID**: アプリケーションID
@@ -38,7 +38,7 @@ Auth0ダッシュボードで**Machine to Machine Application**を作成し、�
 
 ### 3. 必要なスコープを付与
 
-Management APIに対して以下のスコープを付与します：
+Management APIに対して以下のスコープを付与します
 
 - `create:users`: ユーザーの作成
 - `read:users`: ユーザー情報の取得
@@ -343,7 +343,7 @@ query GetUser {
 
 ### 1. パスワードポリシー
 
-Auth0側でパスワードポリシーを設定します：
+Auth0側でパスワードポリシーを設定します
 
 - 最小8文字以上
 - 大文字・小文字・数字・記号を含む
@@ -383,7 +383,7 @@ try {
 
 ### 4. レート制限
 
-Auth0 Management APIにはレート制限があります：
+Auth0 Management APIにはレート制限があります
 
 ```typescript
 import { Throttle } from '@nestjs/throttler'

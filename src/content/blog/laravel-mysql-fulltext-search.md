@@ -346,7 +346,7 @@ $query->whereRaw("MATCH(free_word) AGAINST (? IN BOOLEAN MODE)", [$keyword]);
 
 ## まとめ
 
-MySQLの全文検索を使うことで：
+MySQLの全文検索を使うことで
 
 - **高速な検索**: インデックスを活用した効率的な検索
 - **日本語対応**: N-gramパーサーで日本語の部分一致検索が可能
