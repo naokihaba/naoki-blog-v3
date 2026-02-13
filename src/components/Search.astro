@@ -126,23 +126,19 @@ const isDev = import.meta.env.DEV;
     }
   }
 
-  // Event listeners
-  searchButton?.addEventListener('click', openModal);
-  searchClose?.addEventListener('click', closeModal);
-  searchModal?.addEventListener('click', (e) => {
-    if (e.target === searchModal) closeModal();
-  });
+  // Load Pagefind on page load
+  loadPagefind();
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    // Cmd/Ctrl + K to open
+    // Cmd/Ctrl + K to focus search input
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
-      openModal();
+      searchInput?.focus();
     }
-    // Escape to close
+    // Escape to clear search
     if (e.key === 'Escape') {
-      closeModal();
+      clearSearch();
     }
   });
 
