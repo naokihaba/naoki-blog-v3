@@ -7,7 +7,7 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://nao-dev.netlify.app/', // あなたのサイトURLに変更してください
+  site: 'https://naoki-blog-v3.naoworks.workers.dev/',
   integrations: [
     mdx(),
     sitemap(),
