@@ -14,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 // OGP画像を生成するAPIエンドポイント
 export const GET: APIRoute = async ({ props }) => {
-  const { post } = props;
+  const { post } = props as { post: Awaited<ReturnType<typeof getCollection<'blog'>>>[number] };
 
   // 日付のフォーマット
   const formattedDate = post.data.date.toLocaleDateString('ja-JP', {
@@ -81,19 +81,6 @@ export const GET: APIRoute = async ({ props }) => {
                     children: post.data.title,
                   },
                 },
-                // 説明文
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      fontSize: '32px',
-                      color: 'rgba(255, 255, 255, 0.9)',
-                      lineHeight: 1.4,
-                      maxWidth: '900px',
-                    },
-                    children: post.data.description,
-                  },
-                },
               ],
             },
           },
@@ -153,7 +140,7 @@ export const GET: APIRoute = async ({ props }) => {
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
 
   // PNG画像をレスポンスとして返す
-  return new Response(png, {
+  return new Response(new Uint8Array(png), {
     headers: {
       'Content-Type': 'image/png',
       // キャッシュ制御（1週間）
