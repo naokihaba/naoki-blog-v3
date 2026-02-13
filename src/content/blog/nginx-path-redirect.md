@@ -16,7 +16,7 @@ Nginxで特定のパスへのアクセスを別のURLにリダイレクトさせ
 
 特定のパスへのアクセスを301リダイレクトさせるには、`location`ブロックで`return`ディレクティブを使用します。
 
-```conf
+```nginx
 location /old-path/index.php {
     return 301 https://example.com/new-path;
 }
@@ -31,7 +31,7 @@ location /old-path/index.php {
 
 Laravel/PHPアプリケーション向けのNginx設定例です。
 
-```conf
+```nginx
 server {
     listen 80;
     server_name example.com;
@@ -77,7 +77,7 @@ server {
 
 ### セキュリティヘッダー
 
-```conf
+```nginx
 add_header X-Frame-Options "SAMEORIGIN";
 add_header X-Content-Type-Options "nosniff";
 ```
@@ -87,7 +87,7 @@ add_header X-Content-Type-Options "nosniff";
 
 ### try_filesディレクティブ
 
-```conf
+```nginx
 try_files $uri $uri/ /index.php?$query_string;
 ```
 

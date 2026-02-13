@@ -73,7 +73,7 @@ NestJS側のAPIエンドポイントを直接呼び出されないよう、Auth0
 
 ### 環境変数の設定
 
-```env
+```bash
 # .env
 # Auth0 Domain
 AUTH0_ISSUER_URL="https://your-domain.auth0.com/"

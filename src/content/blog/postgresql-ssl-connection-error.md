@@ -130,7 +130,7 @@ chown postgres:postgres server.key server.crt
 
 #### 2. PostgreSQLの設定
 
-```conf
+```ini
 # postgresql.conf
 ssl = on
 ssl_cert_file = '/path/to/server.crt'
@@ -209,7 +209,7 @@ postgresql://user:pass@db:5432/mydb?sslmode=verify-ca&sslrootcert=/path/to/ca.cr
 
 PostgreSQLサーバーでSSLが無効になっています。
 
-```conf
+```ini
 # postgresql.conf
 ssl = on  # この設定を確認
 ```
