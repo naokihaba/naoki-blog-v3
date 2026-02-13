@@ -5,6 +5,7 @@ date: '2025-10-25'
 event: 'Vue Fes Japan 2025'
 location: '東京'
 slidesUrl: 'https://speakerdeck.com/naokihaba/nuxt-4-no-singleton-data-fetching-layer-de-he-gabian-warunoka'
+slidesEmbedUrl: 'https://speakerdeck.com/player/1ee1a1dd203341b3a2d238df0b347ed0'
 ---
 
 ## 概要

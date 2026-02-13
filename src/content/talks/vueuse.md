@@ -4,6 +4,7 @@ description: 'VueUseの便利なコンポーザブル関数を活用して、Vue
 date: '2024-07-26'
 event: 'Vue.js v-tokyo Meetup #21'
 slidesUrl: 'https://speakerdeck.com/naokihaba/vueuse-5fen-defen-karu-vue-dot-js-kai-fa-noxiao-lu-hua-shu'
+slidesEmbedUrl: 'https://speakerdeck.com/player/515df271e9c347cd9b0ab5d7af5ebb55'
 ---
 
 ## 概要

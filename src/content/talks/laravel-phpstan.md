@@ -4,6 +4,7 @@ description: 'LaravelプロジェクトにPHPStanを導入して、静的解析�
 date: '2025-06-28'
 event: 'PHP カンファレンス 2025'
 slidesUrl: 'https://speakerdeck.com/naokihaba/laravel-plus-phpstanteshi-merushi-jian-de-jing-de-jie-xi-ru-men'
+slidesEmbedUrl: 'https://speakerdeck.com/player/b0bdbd382372413f949a9ddb5bc137d7'
 ---
 
 ## 概要

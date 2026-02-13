@@ -4,6 +4,7 @@ description: 'unplugin-vue-routerを使って、ViteプロジェクトでもNuxt
 date: '2024-10-17'
 event: 'Vue Fes Japan 2024 Pre LT Party'
 slidesUrl: 'https://speakerdeck.com/naokihaba/unplugin-vue-routerteshi-xian-suru-nuxt-feng-huairuhesuruteinku'
+slidesEmbedUrl: 'https://speakerdeck.com/player/f0912dc271094658b9ec37578d08401d'
 ---
 
 ## 概要

@@ -4,6 +4,7 @@ description: 'Pinia Coladaを使った非同期データ管理の新しいアプ
 date: '2024-10-30'
 event: 'Vue Fes Japan 2024 After Night'
 slidesUrl: 'https://speakerdeck.com/naokihaba/pinia-colada-gashi-xian-surusumatonafei-tong-qi-chu-li'
+slidesEmbedUrl: 'https://speakerdeck.com/player/4a1bb9c106e441c791ddc66cfe1a0577'
 ---
 
 ## 概要
