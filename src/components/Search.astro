@@ -45,9 +45,6 @@ const isDev = import.meta.env.DEV;
     }
   }
 
-  const searchButton = document.getElementById('search-button');
-  const searchModal = document.getElementById('search-modal');
-  const searchClose = document.getElementById('search-close');
   const searchInput = document.getElementById('search-input') as HTMLInputElement;
   const searchResults = document.getElementById('search-results');
 
@@ -74,18 +71,8 @@ const isDev = import.meta.env.DEV;
     }
   }
 
-  // Open modal
-  function openModal() {
-    searchModal?.classList.remove('hidden');
-    searchModal?.classList.add('flex');
-    searchInput?.focus();
-    loadPagefind();
-  }
-
-  // Close modal
-  function closeModal() {
-    searchModal?.classList.add('hidden');
-    searchModal?.classList.remove('flex');
+  // Clear search
+  function clearSearch() {
     if (searchInput) searchInput.value = '';
     if (searchResults) {
       searchResults.innerHTML = '<div class="py-12 text-center" style="color: var(--color-text-secondary);">キーワードを入力して検索</div>';
