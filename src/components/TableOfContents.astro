@@ -1,0 +1,37 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+// H2とH3のみを表示
+const toc = headings.filter((h) => h.depth <=3);
+---
+
+{toc.length > 0 && (
+  <nav class="toc rounded-xl p-6 mb-8" style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);">
+    <h2 class="text-lg font-bold mb-4" style="color: var(--color-text-primary);">
+      目次
+    </h2>
+    <ul class="space-y-2">
+      {toc.map((heading) => (
+        <li style={heading.depth === 3 ? 'margin-left: 1rem;' : ''}>
+          <a
+            href={`#${heading.slug}`}
+            class="block text-sm hover:underline transition-colors"
+            style={`color: ${heading.depth === 2 ? 'var(--color-text-primary)' : 'var(--color-text-secondary)'};`}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toc a:hover {
+    color: var(--color-primary);
+  }
+</style>

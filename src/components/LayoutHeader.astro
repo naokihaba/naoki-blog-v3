@@ -1,0 +1,76 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const navLinks = [
+  { label: 'Blog', href: '/' },
+  { label: 'Talks', href: '/talks' },
+  { label: 'About', href: '/about' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="glass-effect sticky top-0 z-50" style="border-bottom: 1px solid var(--color-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+  <div class="mx-auto flex items-center justify-between px-6 py-3" style="max-width: var(--container-max);">
+    <!-- Logo/Site Name -->
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="relative size-10 rounded-lg transition-all group-hover:scale-110 group-hover:rotate-3" style="background: var(--gradient-primary);">
+        <span class="absolute inset-0 flex items-center justify-center text-white text-xl font-black">
+          N
+        </span>
+      </div>
+      <span class="text-xl font-bold gradient-text">nao.dev</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="flex items-center gap-1">
+      {navLinks.map((link) => {
+        const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class="relative px-4 py-2 font-semibold transition-all hover:scale-105"
+            style="color: var(--color-text-primary);"
+          >
+            {link.label}
+            {isActive && (
+              <span
+                class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                style="background: var(--gradient-primary);"
+              ></span>
+            )}
+          </a>
+        );
+      })}
+
+      <div class="mx-2 h-6 w-px" style="background-color: var(--color-border);"></div>
+
+      <a
+        href="/rss.xml"
+        class="rounded-lg p-2 transition-all hover:scale-110"
+        style="color: var(--color-text-primary);"
+        aria-label="RSS Feed"
+        title="RSS Feed"
+      >
+        <Icon name="lucide:rss" class="size-5" />
+      </a>
+
+      <button
+        id="theme-toggle"
+        class="rounded-lg p-2 transition-all hover:rotate-180 hover:scale-110"
+        style="color: var(--color-text-primary);"
+        aria-label="Toggle dark mode"
+      >
+        <Icon name="lucide:sun" class="size-5 hidden dark:block" />
+        <Icon name="lucide:moon" class="size-5 block dark:hidden" />
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const button = document.getElementById('theme-toggle');
+  button?.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+  });
+</script>

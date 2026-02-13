@@ -1,0 +1,125 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import Layout from '../../layouts/Layout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+// 読了時間を計算（簡易版: 日本語は400文字/分）
+function calculateReadingTime(content: string): number {
+  const chars = content.replace(/\s/g, '').length;
+  return Math.ceil(chars / 400);
+}
+
+const readingTime = calculateReadingTime(post.body);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <!-- Hero Section with Gradient Background -->
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20" style="background: var(--gradient-primary);"></div>
+    <div class="relative mx-auto px-4 py-24 sm:py-32" style="max-width: 56rem;">
+      <header class="text-center">
+        <!-- Meta Info -->
+        <div class="mb-8 flex items-center justify-center gap-4 flex-wrap">
+          <div class="inline-flex items-center gap-2 rounded-full px-4 py-2" style="background-color: var(--color-surface-elevated); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <Icon name="lucide:calendar" class="size-4" style="color: var(--color-primary);" />
+            <time
+              class="text-sm font-semibold"
+              style="color: var(--color-text-secondary);"
+              datetime={post.data.date.toISOString()}
+            >
+              {formatDate(post.data.date)}
+            </time>
+          </div>
+
+          <div class="inline-flex items-center gap-2 rounded-full px-4 py-2" style="background-color: var(--color-surface-elevated); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+            <Icon name="lucide:clock" class="size-4" style="color: var(--color-accent);" />
+            <span class="text-sm font-semibold" style="color: var(--color-text-secondary);">
+              {readingTime}分で読めます
+            </span>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="gradient-text mb-8 text-5xl font-black tracking-tight sm:text-7xl" style="line-height: 1.1;">
+          {post.data.title}
+        </h1>
+
+        <!-- Description -->
+        {post.data.description && (
+          <p
+            class="mx-auto mt-6 max-w-2xl text-xl leading-relaxed"
+            style="color: var(--color-text-secondary);"
+          >
+            {post.data.description}
+          </p>
+        )}
+      </header>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <article class="mx-auto px-4 py-16" style="max-width: 56rem;">
+    <!-- Table of Contents -->
+    <TableOfContents headings={headings} />
+
+    <div class="prose mx-auto">
+      <Content />
+    </div>
+
+  <footer class="mt-20 pt-8" style="border-top: 2px solid var(--color-border);">
+    <div class="flex items-center justify-between flex-wrap gap-4">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all hover:gap-3 hover:shadow-lg"
+        style="background: var(--gradient-primary); color: white;"
+      >
+        <Icon name="lucide:arrow-left" class="size-5" />
+        <span>ホームに戻る</span>
+      </a>
+
+      <button
+        id="scroll-to-top"
+        class="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all hover:scale-105 hover:shadow-lg"
+        style="background: var(--gradient-accent); color: white;"
+        title="トップへ戻る"
+      >
+        <span>トップへ</span>
+        <Icon name="lucide:arrow-up" class="size-5" />
+      </button>
+    </div>
+  </footer>
+  </article>
+</Layout>
+
+<script>
+  const button = document.getElementById('scroll-to-top');
+  button?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+<script src="../../scripts/code-copy.ts"></script>

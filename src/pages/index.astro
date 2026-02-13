@@ -1,11 +1,70 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import BlogListItem from '../components/BlogListItem.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allPosts = await getCollection('blog');
+
+// 日付順にソート（新しい順）
+const sortedPosts = allPosts.sort((a, b) =>
+  b.data.date.getTime() - a.data.date.getTime()
+);
+
+// 年別にグループ化
+const postsByYear = sortedPosts.reduce((grouped, post) => {
+  const year = post.data.date.getFullYear();
+  if (!grouped.has(year)) {
+    grouped.set(year, []);
+  }
+  grouped.get(year)!.push(post);
+  return grouped;
+}, new Map<number, typeof sortedPosts>());
+
+// 年を降順にソート
+const sortedYears = Array.from(postsByYear.keys()).sort((a, b) => b - a);
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Blog" description="技術のこと、日々のこと、思いついたことを綴るブログ">
+  <div class="mx-auto px-4 py-16" style="max-width: var(--container-max);">
+    <section class="mx-auto" style="max-width: 1200px;">
+      <!-- Hero Section -->
+      <div class="mb-16 text-center">
+        <h1 class="gradient-text mb-6 text-6xl font-extrabold" style="letter-spacing: -0.03em;">
+          Blog
+        </h1>
+        <p class="mx-auto max-w-2xl text-xl" style="color: var(--color-text-secondary);">
+          技術のこと、日々のこと、思いついたことを綴るブログ
+        </p>
+      </div>
+
+      {postsByYear.size > 0 ? (
+        <div class="space-y-16">
+          {sortedYears.map((year) => {
+            const yearPosts = postsByYear.get(year)!;
+            return (
+              <section>
+                <div class="mb-8 flex items-center gap-4">
+                  <h2 class="text-3xl font-bold gradient-text">
+                    {year}
+                  </h2>
+                  <div class="h-px flex-1" style="background: linear-gradient(to right, var(--color-border), transparent);"></div>
+                </div>
+
+                <!-- Grid Layout -->
+                <div class="grid gap-6 md:grid-cols-2">
+                  {yearPosts.map((post) => (
+                    <BlogListItem post={post} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      ) : (
+        <p class="text-center text-lg" style="color: var(--color-text-secondary);">
+          No posts yet. Check back soon!
+        </p>
+      )}
+    </section>
+  </div>
 </Layout>
