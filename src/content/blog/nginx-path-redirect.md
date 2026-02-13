@@ -24,8 +24,8 @@ location /old-path/index.php {
 
 ### リダイレクトの種類
 
-- **301**: 恒久的なリダイレクト（SEO評価が引き継がれる）
-- **302**: 一時的なリダイレクト
+- **301** 恒久的なリダイレクト（SEO評価が引き継がれる）
+- **302** 一時的なリダイレクト
 
 ## 実践的な設定例
 
@@ -82,8 +82,8 @@ add_header X-Frame-Options "SAMEORIGIN";
 add_header X-Content-Type-Options "nosniff";
 ```
 
-- **X-Frame-Options**: クリックジャッキング攻撃を防止
-- **X-Content-Type-Options**: MIMEタイプスニッフィングを防止
+- **X-Frame-Options** クリックジャッキング攻撃を防止
+- **X-Content-Type-Options** MIMEタイプスニッフィングを防止
 
 ### try_filesディレクティブ
 

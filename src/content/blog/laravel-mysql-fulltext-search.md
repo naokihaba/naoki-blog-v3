@@ -23,7 +23,7 @@ MySQLの**全文検索インデックス（Fulltext Index）**を使うことで
 
 MySQLの全文検索では、**N-gramパーサー**を使用することで日本語にも対応できます。
 
-N-gramは文字列をN文字ずつに分割してインデックスを作成する方法です：
+N-gramは文字列をN文字ずつに分割してインデックスを作成する方法です。
 
 ```
 "サンプル太郎" → ["サン", "ンプ", "プル", "ル太", "太郎"]（2-gram/Bigram）
@@ -122,8 +122,8 @@ class CreateShopsTable extends Migration
 ALTER TABLE shops ADD free_word TEXT AS (...) STORED
 ```
 
-- **仮想カラム**: 他のカラムから自動生成されるカラム
-- **STORED**: 物理的に保存される（検索インデックスを作成可能）
+- **仮想カラム** 他のカラムから自動生成されるカラム
+- **STORED** 物理的に保存される（検索インデックスを作成可能）
 - 複数のカラムを結合して検索対象を作成
 
 #### CONCAT関数
@@ -223,9 +223,9 @@ class ShopController extends Controller
 MATCH(free_word) AGAINST ('検索キーワード' IN BOOLEAN MODE)
 ```
 
-- **MATCH**: 全文検索インデックスを使用
-- **AGAINST**: 検索キーワードを指定
-- **BOOLEAN MODE**: 演算子を使った詳細な検索が可能
+- **MATCH** 全文検索インデックスを使用
+- **AGAINST** 検索キーワードを指定
+- **BOOLEAN MODE** 演算子を使った詳細な検索が可能
 
 #### BOOLEANモードの演算子
 

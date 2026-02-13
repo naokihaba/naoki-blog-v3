@@ -301,10 +301,10 @@ PASS  src/test/e2e/user.e2e-spec.ts (33.623 s)
 
 ## まとめ
 
-NestJSとJestを使ったE2Eテスト環境を構築することで、以下のメリットが得られます：
+NestJSとJestを使ったE2Eテスト環境を構築することで、以下のメリットが得られます。
 
-- **統合テスト**：`Test.createTestingModule()`で本番環境と同じDIコンテナを再現
-- **独立性**：`beforeEach`でデータベースをリセットし、テスト間の依存を排除
-- **実用性**：supertestでHTTPリクエストをプログラマティックにテスト
+- **統合テスト** `Test.createTestingModule()`で本番環境と同じDIコンテナを再現
+- **独立性** `beforeEach`でデータベースをリセットし、テスト間の依存を排除
+- **実用性** supertestでHTTPリクエストをプログラマティックにテスト
 
 TypeORMのsynchronize機能を活用することで、テスト環境のセットアップも自動化できます。

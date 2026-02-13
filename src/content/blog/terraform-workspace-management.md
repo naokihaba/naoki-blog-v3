@@ -170,7 +170,7 @@ terraform destroy -var personal_name_prefix=test
 
 ## まとめ
 
-Terraform workspaceを使うことで、以下のメリットがあります：
+Terraform workspaceを使うことで、以下のメリットがあります。
 
 - 定義ファイルの重複を防ぎ、メンテナンスコストを削減
 - 個人ごとの環境を独立して管理

@@ -36,12 +36,12 @@ CI（継続的インテグレーション）は、開発者がコード変更を
 
 ## 技術スタック
 
-- **Node.js**: サーバーサイドJavaScript実行環境
-- **NestJS**: スケーラブルなNode.jsフレームワーク
-- **TypeORM**: TypeScript用ORマッパー
-- **MySQL 8.0**: リレーショナルデータベース
-- **Jest**: JavaScriptテストフレームワーク
-- **Docker**: コンテナ仮想化プラットフォーム
+- **Node.js** サーバーサイドJavaScript実行環境
+- **NestJS** スケーラブルなNode.jsフレームワーク
+- **TypeORM** TypeScript用ORマッパー
+- **MySQL 8.0** リレーショナルデータベース
+- **Jest** JavaScriptテストフレームワーク
+- **Docker** コンテナ仮想化プラットフォーム
 
 ## プロジェクトセットアップ
 
