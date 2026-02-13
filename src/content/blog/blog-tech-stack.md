@@ -29,13 +29,17 @@ tags:
 
 **スタイリング**
 - **Tailwind CSS v4** - ユーティリティファーストCSS
+- **@tailwindcss/typography** - 記事本文の美しいタイポグラフィ
 - **CSS変数** - ダークモード対応のテーマシステム
 
 **その他**
 - **astro-icon** - Iconifyベースのアイコンシステム
 - **@astrojs/sitemap** - SEO最適化
+- **@astrojs/rss** - RSSフィード生成
 - **Pagefind** - 静的サイト向け高速検索
 - **textlint** - 日本語文章の品質チェック
+- **satori + sharp** - 動的OGP画像生成
+- **wrangler** - Cloudflare Workersへのデプロイ
 
 ## Astro 5 + Content Collections
 
@@ -160,6 +164,18 @@ CSS変数を使って、ライト/ダークモードのカラーテーマを実�
 
 localStorageとMutationObserverを使用して、ユーザーの好みに応じた自動テーマ切り替えを実装しています。
 
+### @tailwindcss/typography
+
+記事本文のスタイリングには `@tailwindcss/typography` プラグインを使用しています。
+
+```astro
+<article class="prose dark:prose-invert max-w-none">
+  <Content />
+</article>
+```
+
+`prose` クラスを適用するだけで、見出し、段落、リスト、コードブロックなど、あらゆる要素に美しいタイポグラフィが適用されます。`dark:prose-invert` でダークモードにも自動対応します。
+
 ## SEO対策
 
 SEO対策には `@astrojs/sitemap` を使用しています。
@@ -176,40 +192,83 @@ export default defineConfig({
 
 自動的にsitemap.xmlが生成され、検索エンジンのクローラーがサイトを効率的にインデックスできます。
 
-## Rehypeプラグイン - Favicon Links
+## RSSフィード - @astrojs/rss
 
-外部リンクに自動的にfaviconを追加するカスタムRehypeプラグインを実装しています。
+購読者のために、RSSフィードを提供しています。
+
+`@astrojs/rss` を使用することで、簡単にRSSフィードを生成できます。
 
 ```javascript
-// src/plugins/rehype-favicon-links.js
-import { visit } from 'unist-util-visit';
+// src/pages/rss.xml.js
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
 
-export default function rehypeFaviconLinks() {
-  return (tree) => {
-    visit(tree, 'element', (node) => {
-      if (node.tagName === 'a' && node.properties?.href) {
-        const href = node.properties.href;
+export async function GET(context) {
+  const posts = await getCollection('blog');
 
-        if (href.startsWith('http://') || href.startsWith('https://')) {
-          const url = new URL(href);
-          const faviconNode = {
-            type: 'element',
-            tagName: 'img',
-            properties: {
-              src: `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=16`,
-              alt: '',
-              class: 'inline-favicon',
-            },
-          };
-          node.children.unshift(faviconNode);
-        }
-      }
-    });
-  };
+  const sortedPosts = posts.sort((a, b) =>
+    b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  return rss({
+    title: 'nao.dev',
+    description: 'Front-end Developer loving Vue ecosystem',
+    site: context.site,
+    items: sortedPosts.map((post) => ({
+      title: post.data.title,
+      description: post.data.description,
+      pubDate: post.data.date,
+      link: `/blog/${post.slug}/`,
+    })),
+    customData: `<language>ja</language>`,
+  });
 }
 ```
 
-リンク先のサイトが一目で分かり、ユーザー体験が向上します。
+Content Collectionsと連携することで、記事の追加・更新時に自動的にRSSフィードも更新されます。
+
+## 動的OGP画像生成 - satori + sharp
+
+各記事ごとに動的にOGP画像を生成しています。
+
+[satori](https://github.com/vercel/satori) はVercelが開発したライブラリで、HTMLとCSSをSVGに変換できます。これと [sharp](https://sharp.pixelplumbing.com/) を組み合わせることで、美しいOGP画像を自動生成できます。
+
+```typescript
+// src/pages/og/[...slug].png.ts
+import satori from 'satori';
+import sharp from 'sharp';
+import { getCollection } from 'astro:content';
+
+export const GET: APIRoute = async ({ props }) => {
+  const { post } = props;
+
+  // Satoriでデザインを定義
+  const svg = await satori(
+    {
+      type: 'div',
+      props: {
+        style: {
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          // ... スタイル定義
+        },
+        children: [
+          { type: 'div', props: { children: post.data.title } },
+        ],
+      },
+    },
+    { width: 1200, height: 630 }
+  );
+
+  // SharpでSVGをPNGに変換
+  const png = await sharp(Buffer.from(svg)).png().toBuffer();
+
+  return new Response(png, {
+    headers: { 'Content-Type': 'image/png' },
+  });
+};
+```
+
+記事タイトル、日付、サイト名が含まれたカード型のOGP画像が自動生成され、SNSでのシェア時に美しく表示されます。
 
 ## astro-icon
 
@@ -299,10 +358,41 @@ Astroの強みを活かし、超高速なブログを実現しています
 - **最適化された画像** - 自動的にWebP/AVIF変換
 - **Tailwind CSS v4** - PostCSS不要でビルドが高速
 
+## デプロイ - Cloudflare Workers
+
+このブログは [Cloudflare Workers](https://workers.cloudflare.com/) でホストされています。
+
+Cloudflare Workersを選んだ理由は以下のとおりです
+
+- **エッジでの実行** - 世界中のエッジロケーションでコードを実行
+- **超高速なレスポンス** - エッジからの直接配信で低レイテンシ
+- **無料で使いやすい** - 個人ブログには十分な無料枠
+- **柔軟性** - 静的サイトだけでなく、動的な処理も可能
+
+### wranglerでデプロイ
+
+[wrangler](https://developers.cloudflare.com/workers/wrangler/) を使用することで、コマンド一つでデプロイできます。
+
+```bash
+# ビルド＆デプロイ
+pnpm build && pnpm deploy
+```
+
+`wrangler.toml` で設定を管理し、CI/CDパイプラインにも簡単に組み込めます。
+
 ## まとめ
 
 Astro 5 と Tailwind CSS v4 の組み合わせにより、超高速でモダンなブログを構築できました。
 
-Content Collectionsによる型安全な記事管理、カスタムRehypeプラグインによる拡張性、そしてモダンなデザインシステムにより、快適な執筆・閲覧体験を実現しています。
+主な特徴をまとめると：
+
+- **Content Collections** - 型安全な記事管理
+- **動的OGP画像生成** - satoriとsharpによる美しいOGP画像
+- **RSSフィード** - 購読者のための標準サポート
+- **Pagefind** - 静的サイト向け高速検索
+- **Cloudflare Workers** - エッジでの超高速配信
+- **モダンなデザインシステム** - ダークモード完全対応
+
+これらの技術により、快適な執筆・閲覧体験を実現しています。
 
 今後もこのブログを通じて、技術的な知見や経験を発信していきます！

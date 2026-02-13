@@ -6,57 +6,28 @@ const isDev = import.meta.env.DEV;
 ---
 
 {!isDev && (
-<div id="search-container" class="relative">
-  <!-- Search Button -->
-  <button
-    id="search-button"
-    class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all hover:scale-105"
-    style="background-color: var(--color-surface-elevated); color: var(--color-text-primary); border: 1px solid var(--color-border);"
-    aria-label="検索"
-  >
-    <Icon name="lucide:search" class="size-4" />
-    <span class="hidden sm:inline">検索</span>
-    <kbd class="ml-2 hidden sm:inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs" style="background-color: var(--color-surface-secondary); color: var(--color-text-secondary);">
-      ⌘K
-    </kbd>
-  </button>
+<div id="search-container" class="w-full max-w-4xl mx-auto px-4 py-8">
+  <!-- Search Section -->
+  <div class="glass-card rounded-2xl p-6 shadow-lg">
+    <!-- Search Input -->
+    <div class="mb-4 flex items-center gap-3 rounded-xl px-4 py-3" style="background-color: var(--color-surface-elevated); border: 2px solid var(--color-border);">
+      <Icon name="lucide:search" class="size-5" style="color: var(--color-primary);" />
+      <input
+        id="search-input"
+        type="text"
+        placeholder="記事を検索..."
+        class="flex-1 bg-transparent text-lg outline-none"
+        style="color: var(--color-text-primary);"
+      />
+      <kbd class="hidden sm:inline-flex items-center gap-1 rounded px-2 py-0.5 text-xs" style="background-color: var(--color-surface-secondary); color: var(--color-text-secondary);">
+        ⌘K
+      </kbd>
+    </div>
 
-  <!-- Search Modal -->
-  <div
-    id="search-modal"
-    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
-    style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);"
-  >
-    <div
-      class="glass-card relative w-full max-w-2xl rounded-2xl p-6 shadow-2xl"
-      style="max-height: 80vh; overflow: hidden;"
-    >
-      <!-- Search Input -->
-      <div class="mb-4 flex items-center gap-3 rounded-xl px-4 py-3" style="background-color: var(--color-surface-elevated); border: 2px solid var(--color-border);">
-        <Icon name="lucide:search" class="size-5" style="color: var(--color-primary);" />
-        <input
-          id="search-input"
-          type="text"
-          placeholder="記事を検索..."
-          class="flex-1 bg-transparent text-lg outline-none"
-          style="color: var(--color-text-primary);"
-          autofocus
-        />
-        <button
-          id="search-close"
-          class="rounded-lg p-1 transition-colors hover:bg-opacity-20"
-          style="color: var(--color-text-secondary);"
-          aria-label="閉じる"
-        >
-          <Icon name="lucide:x" class="size-5" />
-        </button>
-      </div>
-
-      <!-- Search Results -->
-      <div id="search-results" class="overflow-y-auto" style="max-height: 60vh;">
-        <div class="py-12 text-center" style="color: var(--color-text-secondary);">
-          キーワードを入力して検索
-        </div>
+    <!-- Search Results -->
+    <div id="search-results" class="overflow-y-auto" style="max-height: 60vh;">
+      <div class="py-12 text-center" style="color: var(--color-text-secondary);">
+        キーワードを入力して検索
       </div>
     </div>
   </div>
