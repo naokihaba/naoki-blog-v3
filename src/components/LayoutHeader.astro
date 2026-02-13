@@ -9,6 +9,7 @@ const navLinks = [
 ];
 
 const currentPath = Astro.url.pathname;
+const currentLocale = currentPath.startsWith('/en') ? 'en' : 'ja';
 ---
 
 <header class="glass-effect sticky top-0 z-50" style="border-bottom: 1px solid var(--color-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
@@ -59,6 +60,19 @@ const currentPath = Astro.url.pathname;
       </a>
 
       <button
+        id="locale-toggle"
+        class="rounded-lg px-3 py-2 text-sm font-semibold transition-all hover:scale-110"
+        style="color: var(--color-text-primary);"
+        aria-label="Toggle language"
+        data-locale={currentLocale}
+      >
+        <span class="flex items-center gap-1">
+          <Icon name="lucide:globe" class="size-4" />
+          {currentLocale.toUpperCase()}
+        </span>
+      </button>
+
+      <button
         id="theme-toggle"
         class="rounded-lg p-2 transition-all hover:rotate-180 hover:scale-110"
         style="color: var(--color-text-primary);"
@@ -72,8 +86,27 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
-  const button = document.getElementById('theme-toggle');
-  button?.addEventListener('click', () => {
+  // Theme toggle
+  const themeButton = document.getElementById('theme-toggle');
+  themeButton?.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
+  });
+
+  // Locale toggle
+  const localeButton = document.getElementById('locale-toggle');
+  localeButton?.addEventListener('click', () => {
+    const currentLocale = localeButton.dataset.locale;
+    const currentPath = window.location.pathname;
+
+    let newPath: string;
+    if (currentLocale === 'ja') {
+      // Switch to English
+      newPath = '/en' + currentPath;
+    } else {
+      // Switch to Japanese
+      newPath = currentPath.replace(/^\/en/, '') || '/';
+    }
+
+    window.location.href = newPath;
   });
 </script>

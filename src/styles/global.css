@@ -9,19 +9,19 @@
   --color-text-secondary: #71717a;
   --color-border: #e4e4e7;
 
-  /* Primary - Purple Gradient */
-  --color-primary: #8b5cf6;
-  --color-primary-hover: #7c3aed;
+  /* Primary - Deep Violet */
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
 
-  /* Accent - Warm Gradient */
-  --color-accent: #f97316;
-  --color-accent-hover: #ea580c;
+  /* Accent - Purple */
+  --color-accent: #a855f7;
+  --color-accent-hover: #9333ea;
 
-  /* Gradients - Cool & Calm */
-  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
-  --gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
-  --gradient-warm: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  /* Gradients - Creative & Elegant */
+  --gradient-primary: linear-gradient(135deg, #6b21a8 0%, #7c3aed 100%);
+  --gradient-accent: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  --gradient-warm: linear-gradient(135deg, #6b21a8 0%, #c084fc 100%);
+  --gradient-cool: linear-gradient(135deg, #7c3aed 0%, #e9d5ff 100%);
 
   /* Code */
   --color-code-bg: #fafafa;
@@ -70,19 +70,19 @@ ol {
   --color-text-secondary: #a1a1aa;
   --color-border: #3f3f46;
 
-  /* Primary - Brighter Purple */
-  --color-primary: #a78bfa;
-  --color-primary-hover: #c4b5fd;
+  /* Primary - Light Violet */
+  --color-primary: #c4b5fd;
+  --color-primary-hover: #ddd6fe;
 
-  /* Accent - Warm Orange/Pink */
-  --color-accent: #fb923c;
-  --color-accent-hover: #fdba74;
+  /* Accent - Light Purple */
+  --color-accent: #d8b4fe;
+  --color-accent-hover: #e9d5ff;
 
-  /* Gradients - Cool & Vibrant in dark mode */
-  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #14b8a6 100%);
-  --gradient-accent: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
-  --gradient-warm: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
-  --gradient-cool: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
+  /* Gradients - Vibrant & Elegant in dark mode */
+  --gradient-primary: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
+  --gradient-accent: linear-gradient(135deg, #c084fc 0%, #d8b4fe 100%);
+  --gradient-warm: linear-gradient(135deg, #9333ea 0%, #c4b5fd 100%);
+  --gradient-cool: linear-gradient(135deg, #a78bfa 0%, #e9d5ff 100%);
 
   /* Code */
   --color-code-bg: #18181b;

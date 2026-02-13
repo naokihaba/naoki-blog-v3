@@ -1,0 +1,101 @@
+---
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+
+// Fetch OGP data
+let ogpData = {
+  title: url,
+  description: '',
+  image: '',
+  siteName: '',
+};
+
+try {
+  const response = await fetch(url);
+  const html = await response.text();
+
+  // Extract OGP tags
+  const titleMatch = html.match(/<meta property="og:title" content="([^"]*)"/) ||
+                     html.match(/<title>([^<]*)<\/title>/);
+  const descMatch = html.match(/<meta property="og:description" content="([^"]*)"/);
+  const imageMatch = html.match(/<meta property="og:image" content="([^"]*)"/);
+  const siteMatch = html.match(/<meta property="og:site_name" content="([^"]*)"/);
+
+  if (titleMatch) ogpData.title = titleMatch[1];
+  if (descMatch) ogpData.description = descMatch[1];
+  if (imageMatch) ogpData.image = imageMatch[1];
+  if (siteMatch) ogpData.siteName = siteMatch[1];
+} catch (error) {
+  console.warn(`Failed to fetch OGP data for ${url}:`, error);
+}
+
+// Get domain from URL
+const domain = new URL(url).hostname.replace('www.', '');
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="link-card block my-6 rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl no-underline"
+  style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border); text-decoration: none !important;"
+>
+  <div class="flex gap-4">
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 mb-2">
+        <img
+          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+          alt=""
+          width="16"
+          height="16"
+          class="rounded"
+        />
+        <span class="text-xs font-semibold" style="color: var(--color-text-secondary);">
+          {ogpData.siteName || domain}
+        </span>
+      </div>
+
+      <h3 class="font-bold mb-2 line-clamp-2" style="color: var(--color-text-primary); font-size: 1.125rem;">
+        {ogpData.title}
+      </h3>
+
+      {ogpData.description && (
+        <p class="text-sm line-clamp-2" style="color: var(--color-text-secondary);">
+          {ogpData.description}
+        </p>
+      )}
+    </div>
+
+    <!-- Image -->
+    {ogpData.image && (
+      <div class="flex-shrink-0 w-32 h-32 rounded-lg overflow-hidden">
+        <img
+          src={ogpData.image}
+          alt=""
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+  </div>
+</a>
+
+<style>
+  .link-card:hover h3 {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
