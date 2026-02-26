@@ -13,25 +13,12 @@ interface ToolCategory {
   tools: Tool[]
 }
 
-interface ReadingItem {
-  title: string
-  author?: string
-  url?: string
-  type: 'book' | 'article' | 'video'
-}
-
-const currentlyReading: ReadingItem[] = [
-  // TODO(human): Add your currently reading items here
-  // Example:
-  // { title: 'Vue.js Design Patterns and Best Practices', author: 'Pablo David Garaguso', type: 'book' },
-]
-
 const toolCategories: ToolCategory[] = [
   {
     category: 'ソフトウェア',
     tools: [
       { name: 'Visual Studio Code', description: 'メインエディタ', url: 'https://code.visualstudio.com/' },
-      { name: 'Arc', description: 'メインブラウザ', url: 'https://arc.net/' },
+      { name: 'Google Chrome', description: 'メインブラウザ', url: 'https://www.google.com/chrome/' },
       { name: 'Raycast', description: 'ランチャー・生産性ツール', url: 'https://www.raycast.com/' },
       { name: 'Rectangle', description: 'ウィンドウ管理', url: 'https://rectangleapp.com/' },
     ],
@@ -48,7 +35,7 @@ const toolCategories: ToolCategory[] = [
     category: 'ハードウェア',
     tools: [
       { name: 'MacBook Pro 13インチ M2 (2022)', description: 'メイン開発マシン (16GB)' },
-      { name: 'LG 34WP60C-B', description: 'ウルトラワイドモニター' },
+      { name: 'BenQ RD320UA', description: 'モニター' },
       { name: 'HHKB Professional HYBRID Type-S', description: '英語配列キーボード' },
       { name: 'Anker Soundcore Space One', description: 'ノイズキャンセリングヘッドフォン' },
       { name: 'UGREEN Revodok Pro', description: 'USB-C ドック' },
@@ -112,60 +99,6 @@ const toolCategories: ToolCategory[] = [
           </div>
         </div>
       </div>
-
-      <!-- Currently Reading -->
-      {currentlyReading.length > 0 && (
-        <div class="mb-20">
-          <h2 class="gradient-text mb-8 text-center text-4xl font-bold">現在読んでいる</h2>
-
-          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {currentlyReading.map((item) => {
-              const Icon_name = item.type === 'book' ? 'lucide:book-open' : item.type === 'article' ? 'lucide:file-text' : 'lucide:video'
-              return item.url ? (
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="group block rounded-xl p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
-                  style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);"
-                >
-                  <div class="mb-3 flex items-center gap-2">
-                    <Icon name={Icon_name} class="size-5" style="color: var(--color-primary);" />
-                    <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--color-text-secondary);">
-                      {item.type}
-                    </span>
-                  </div>
-                  <h4 class="font-bold mb-2 transition-colors group-hover:gradient-text" style="color: var(--color-text-primary);">
-                    {item.title}
-                  </h4>
-                  {item.author && (
-                    <p class="text-sm" style="color: var(--color-text-secondary);">
-                      {item.author}
-                    </p>
-                  )}
-                </a>
-              ) : (
-                <div class="rounded-xl p-6" style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);">
-                  <div class="mb-3 flex items-center gap-2">
-                    <Icon name={Icon_name} class="size-5" style="color: var(--color-primary);" />
-                    <span class="text-xs font-semibold uppercase tracking-wider" style="color: var(--color-text-secondary);">
-                      {item.type}
-                    </span>
-                  </div>
-                  <h4 class="font-bold mb-2" style="color: var(--color-text-primary);">
-                    {item.title}
-                  </h4>
-                  {item.author && (
-                    <p class="text-sm" style="color: var(--color-text-secondary);">
-                      {item.author}
-                    </p>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
 
       <!-- Tools & Hardware -->
       <div>
