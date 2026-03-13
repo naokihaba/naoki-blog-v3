@@ -7,7 +7,7 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://naoki-blog-v3.naoworks.workers.dev/',
+  site: 'https://blog.naokihaba.com/',
   integrations: [
     mdx(),
     sitemap(),

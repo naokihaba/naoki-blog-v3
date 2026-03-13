@@ -113,7 +113,7 @@ export const GET: APIRoute = async ({ props }) => {
                       fontWeight: 'bold',
                       color: 'white',
                     },
-                    children: 'nao.dev',
+                    children: 'naokihaba blog',
                   },
                 },
               ],

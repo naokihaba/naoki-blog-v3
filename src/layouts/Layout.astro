@@ -10,12 +10,12 @@ interface Props {
 }
 
 const {
-  title = 'nao.dev',
+  title = 'naokihaba blog',
   description = 'Front-end Developer loving Vue ecosystem. 技術のこと、日々のこと、思いついたことを綴るブログ',
   ogImage,
 } = Astro.props;
 
-const fullTitle = title === 'nao.dev' ? title : `${title} | nao.dev`;
+const fullTitle = title === 'naokihaba blog' ? title : `${title} | naokihaba blog`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/favicon.svg', Astro.site);
 ---
@@ -39,7 +39,7 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.site) : new URL('/favicon.sv
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:site_name" content="nao.dev" />
+    <meta property="og:site_name" content="naokihaba blog" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

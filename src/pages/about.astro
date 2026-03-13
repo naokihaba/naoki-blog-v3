@@ -1,5 +1,4 @@
 ---
-import { Icon } from 'astro-icon/components'
 import Layout from '../layouts/Layout.astro'
 
 interface Tool {
@@ -38,7 +37,6 @@ const toolCategories: ToolCategory[] = [
       { name: 'BenQ RD320UA', description: 'モニター' },
       { name: 'HHKB Professional HYBRID Type-S', description: '英語配列キーボード' },
       { name: 'Anker Soundcore Space One', description: 'ノイズキャンセリングヘッドフォン' },
-      { name: 'UGREEN Revodok Pro', description: 'USB-C ドック' },
       { name: 'BenQ ScreenBar Pro', description: 'モニターライト' },
     ],
   },
@@ -46,106 +44,47 @@ const toolCategories: ToolCategory[] = [
 ---
 
 <Layout title="About" description="Naoki Haba のプロフィールと開発環境">
-  <div class="mx-auto px-4 py-16" style="max-width: var(--container-max);">
-    <section class="mx-auto" style="max-width: 1200px;">
-      <!-- Profile Header -->
-      <div class="mb-20 flex flex-col items-center gap-8 text-center">
-        <div class="relative">
-          <div class="absolute inset-0 blur-3xl opacity-30" style="background: var(--gradient-primary);"></div>
-          <img
-            src="/Avatar 381x381.png"
-            alt="Naoki Haba"
-            width="160"
-            height="160"
-            class="relative size-40 rounded-full object-cover ring-4 ring-offset-4"
-            style="ring-color: var(--color-border); ring-offset-color: var(--color-surface);"
-            loading="lazy"
-          />
+  <div class="mx-auto px-6 py-12" style="max-width: 48rem;">
+    <!-- Profile -->
+    <div class="mb-12">
+      <img
+        src="/Avatar 381x381.png"
+        alt="Naoki Haba"
+        width="64"
+        height="64"
+        class="rounded-full mb-4"
+        loading="lazy"
+      />
+      <h1 class="text-xl font-bold mb-2" style="color: var(--color-text-primary);">Naoki Haba</h1>
+      <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
+        💚 Front-end Developer loving Vue ecosystem
+      </p>
+      <div class="flex gap-4 text-sm">
+        <a href="https://x.com/naokihaba" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-secondary);">X</a>
+        <a href="https://github.com/naokihaba" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-secondary);">GitHub</a>
         </div>
-        <div>
-          <h1 class="gradient-text mb-4 text-5xl font-extrabold" style="letter-spacing: -0.03em;">Naoki Haba</h1>
-          <p class="text-2xl mb-6" style="color: var(--color-text-secondary);">💚 Front-end Developer loving Vue ecosystem</p>
-          <div class="flex justify-center gap-4">
-            <a
-              href="https://x.com/naokihaba"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              class="rounded-full p-3 transition-all hover:scale-110"
-              style="background-color: var(--color-surface-elevated); color: var(--color-text-primary);"
-            >
-              <Icon name="lucide:twitter" class="size-6" />
-            </a>
-            <a
-              href="https://github.com/naokihaba"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              class="rounded-full p-3 transition-all hover:scale-110"
-              style="background-color: var(--color-surface-elevated); color: var(--color-text-primary);"
-            >
-              <Icon name="lucide:github" class="size-6" />
-            </a>
-            <a
-              href="https://my-pull-requests.naoworks.workers.dev/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="My Pull Requests"
-              class="rounded-full p-3 transition-all hover:scale-110"
-              style="background-color: var(--color-surface-elevated); color: var(--color-text-primary);"
-            >
-              <Icon name="lucide:git-pull-request" class="size-6" />
-            </a>
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <!-- Tools & Hardware -->
-      <div>
-        <h2 class="gradient-text mb-8 text-center text-4xl font-bold">開発環境</h2>
-
-        <div class="space-y-12">
-          {
-            toolCategories.map((category) => (
-              <div>
-                <h3 class="mb-6 text-2xl font-bold flex items-center gap-3" style="color: var(--color-text-primary);">
-                  <span class="h-1 w-8 rounded-full" style="background: var(--gradient-primary);" />
-                  {category.category}
-                </h3>
-                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {category.tools.map((tool) =>
-                    tool.url ? (
-                      <a
-                        href={tool.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="group block rounded-xl p-6 transition-all hover:-translate-y-1 hover:shadow-lg"
-                        style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);"
-                      >
-                        <h4 class="font-bold mb-2 transition-colors group-hover:gradient-text" style="color: var(--color-text-primary);">
-                          {tool.name}
-                        </h4>
-                        <p class="text-sm" style="color: var(--color-text-secondary);">
-                          {tool.description}
-                        </p>
-                      </a>
-                    ) : (
-                      <div class="rounded-xl p-6" style="background-color: var(--color-surface-elevated); border: 1px solid var(--color-border);">
-                        <h4 class="font-bold mb-2" style="color: var(--color-text-primary);">
-                          {tool.name}
-                        </h4>
-                        <p class="text-sm" style="color: var(--color-text-secondary);">
-                          {tool.description}
-                        </p>
-                      </div>
-                    ),
-                  )}
-                </div>
-              </div>
-            ))
-          }
+    <!-- 開発環境 -->
+    <div>
+      <h2 class="text-sm font-semibold mb-6" style="color: var(--color-text-secondary);">開発環境</h2>
+      {toolCategories.map((category) => (
+        <div class="mb-8">
+          <h3 class="text-sm font-semibold mb-3" style="color: var(--color-text-primary);">{category.category}</h3>
+          <ul class="list-none space-y-2 p-0">
+            {category.tools.map((tool) => (
+              <li>
+                {tool.url ? (
+                  <a href={tool.url} target="_blank" rel="noopener noreferrer" class="text-sm hover:underline" style="color: var(--color-text-primary);">{tool.name}</a>
+                ) : (
+                  <span class="text-sm" style="color: var(--color-text-primary);">{tool.name}</span>
+                )}
+                <p class="text-sm" style="color: var(--color-text-secondary);">{tool.description}</p>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   </div>
 </Layout>

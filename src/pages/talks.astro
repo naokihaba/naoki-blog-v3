@@ -1,21 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import TalkListItem from '../components/TalkListItem.astro';
 
 const allTalks = await getCollection('talks');
 
-// 日付順にソート（新しい順）
 const sortedTalks = allTalks.sort((a, b) =>
   b.data.date.getTime() - a.data.date.getTime()
 );
 
-// 年ごとにグループ化
 const talksByYear = sortedTalks.reduce((acc, talk) => {
   const year = talk.data.date.getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
+  if (!acc[year]) acc[year] = [];
   acc[year].push(talk);
   return acc;
 }, {} as Record<number, typeof sortedTalks>);
@@ -24,38 +19,51 @@ const years = Object.keys(talksByYear).map(Number).sort((a, b) => b - a);
 ---
 
 <Layout title="Talks" description="登壇資料やプレゼンテーションのまとめ">
-  <div class="mx-auto px-4 py-16" style="max-width: var(--container-max);">
-    <section class="mx-auto" style="max-width: 1200px;">
-      <!-- Hero Section -->
-      <div class="mb-16 text-center">
-        <h1 class="gradient-text mb-6 text-6xl font-extrabold" style="letter-spacing: -0.03em;">
-          Talks
-        </h1>
-        <p class="mx-auto max-w-2xl text-xl" style="color: var(--color-text-secondary);">
-          登壇資料やプレゼンテーションのまとめ
-        </p>
-      </div>
-
-      {sortedTalks.length > 0 ? (
-        <div class="space-y-16">
-          {years.map((year) => (
-            <section>
-              <h2 class="gradient-text mb-8 text-4xl font-extrabold" style="letter-spacing: -0.02em;">
-                {year}
-              </h2>
-              <div class="grid gap-6 md:grid-cols-2">
-                {talksByYear[year].map((talk) => (
-                  <TalkListItem talk={talk} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      ) : (
-        <p class="text-center text-lg" style="color: var(--color-text-secondary);">
-          No talks yet. Check back soon!
-        </p>
-      )}
-    </section>
+  <div class="mx-auto px-6 py-12" style="max-width: 48rem;">
+    {sortedTalks.length > 0 ? (
+      years.map((year) => (
+        <section class="mb-12">
+          <h2 class="mb-4 text-sm font-semibold" style="color: var(--color-text-secondary);">{year}</h2>
+          <ul class="list-none space-y-8 p-0">
+            {talksByYear[year].map((talk) => (
+              <li>
+                {talk.data.slidesEmbedUrl && (
+                  <div class="mb-3 w-full overflow-hidden rounded-lg" style="aspect-ratio: 16/9;">
+                    <iframe
+                      src={talk.data.slidesEmbedUrl}
+                      class="size-full"
+                      allowfullscreen
+                      loading="lazy"
+                      style="border: 0;"
+                    ></iframe>
+                  </div>
+                )}
+                <div class="flex items-baseline justify-between gap-4">
+                  <div>
+                    <p class="text-base font-medium" style="color: var(--color-text-primary);">{talk.data.title}</p>
+                    {talk.data.event && (
+                      <p class="text-sm mt-0.5" style="color: var(--color-text-secondary);">{talk.data.event}</p>
+                    )}
+                    <div class="flex gap-3 mt-1 text-sm">
+                      {talk.data.slidesUrl && (
+                        <a href={talk.data.slidesUrl} target="_blank" rel="noopener noreferrer" style="color: var(--color-primary);">Slides</a>
+                      )}
+                      {talk.data.videoUrl && (
+                        <a href={talk.data.videoUrl} target="_blank" rel="noopener noreferrer" style="color: var(--color-primary);">Video</a>
+                      )}
+                    </div>
+                  </div>
+                  <time class="shrink-0 text-sm tabular-nums" style="color: var(--color-text-secondary);" datetime={talk.data.date.toISOString()}>
+                    {talk.data.date.toLocaleDateString('ja-JP', { month: '2-digit', day: '2-digit' })}
+                  </time>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    ) : (
+      <p class="text-sm" style="color: var(--color-text-secondary);">No talks yet.</p>
+    )}
   </div>
 </Layout>

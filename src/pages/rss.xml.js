@@ -10,14 +10,14 @@ export async function GET(context) {
   );
 
   return rss({
-    title: 'nao.dev',
+    title: 'naokihaba blog',
     description: 'Front-end Developer loving Vue ecosystem. 技術のこと、日々のこと、思いついたことを綴るブログ',
     site: context.site,
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.date,
-      link: `/blog/${post.slug}/`,
+      link: `/posts/${post.slug}/`,
     })),
     customData: `<language>ja</language>`,
   });
