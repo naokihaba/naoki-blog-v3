@@ -59,7 +59,7 @@ function slugFromPath(path: string) {
         <li v-for="post in postsByYear.get(year)" :key="post.path">
           <NuxtLink
             :to="`/posts/${slugFromPath(post.path)}`"
-            class="block text-lg hover:underline"
+            class="block text-lg no-underline hover:underline"
             style="color: var(--color-text-primary);"
           >
             {{ post.title }}
