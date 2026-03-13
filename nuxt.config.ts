@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt/config"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@unocss/nuxt", "@nuxt/content", "nuxt-og-image"],
+  modules: ["@unocss/nuxt", "@nuxt/content"],
   routeRules: {
     "/blog/**": { redirect: { to: "/posts/**", statusCode: 301 } },
   },
@@ -21,7 +21,9 @@ export default defineNuxtConfig({
             "Front-end Developer loving Vue ecosystem. 技術のこと、日々のこと、思いついたことを綴るブログ",
         },
         { property: "og:site_name", content: "naokihaba blog" },
-        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:card", content: "summary" },
+        { property: "og:image", content: "https://blog.naokihaba.com/favicon.svg" },
+        { name: "twitter:image", content: "https://blog.naokihaba.com/favicon.svg" },
         { name: "twitter:site", content: "@naokihaba" },
         { name: "twitter:creator", content: "@naokihaba" },
       ],

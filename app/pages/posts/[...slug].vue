@@ -21,8 +21,6 @@ useSeoMeta({
   twitterDescription: () => post.value?.description,
 });
 
-defineOgImage("BlogCard");
-
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? []);
 
 function formatDate(dateStr: string) {
