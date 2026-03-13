@@ -127,13 +127,16 @@ ol {
 }
 
 .prose a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: opacity 0.15s;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-border);
+  transition: text-decoration-color 0.15s;
 }
 
 .prose a:hover {
-  opacity: 0.7;
+  text-decoration-color: var(--color-text-primary);
 }
 
 .prose code {
