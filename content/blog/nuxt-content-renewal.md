@@ -136,25 +136,6 @@ vp test
 
 個別にツールをインストール・設定する必要がなく、統一されたインターフェースでプロジェクトを管理できます。
 
-## RSS フィードの実装
-
-Astro では `@astrojs/rss` パッケージが RSS を簡単に生成してくれました。Nuxt では Server Routes を使って自前で実装しています。
-
-`server/routes/rss.xml.ts` として配置することで、自動的に `/rss.xml` のエンドポイントになります。
-
-```typescript
-// server/routes/rss.xml.ts
-import { readdir, readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-
-export default defineEventHandler(async (event) => {
-  const files = await readdir(join(process.cwd(), 'content/blog'));
-  // markdown を読んで RSS XML を生成...
-  setHeader(event, 'Content-Type', 'application/xml; charset=utf-8');
-  return rss;
-});
-```
-
 ## ダークモード
 
 システムの color-scheme に合わせた自動ダークモードを実装しています。
