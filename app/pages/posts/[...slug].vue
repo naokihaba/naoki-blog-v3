@@ -21,6 +21,12 @@ useSeoMeta({
   twitterDescription: () => post.value?.description,
 });
 
+defineOgImage("SimpleBlog", {
+  title: post.value?.title,
+  description: post.value?.description,
+  siteName: "naokihaba blog",
+});
+
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? []);
 
 function formatDate(dateStr: string) {
@@ -118,10 +124,25 @@ onUnmounted(() => {
       <ContentRenderer :value="post!" />
     </div>
 
-    <footer class="mt-16 pt-6" style="border-top: 1px solid var(--color-border);">
-      <NuxtLink to="/" class="text-sm hover:underline" style="color: var(--color-text-secondary);">
-        ← ホームに戻る
-      </NuxtLink>
+    <footer class="mt-16 space-y-8">
+      <div class="flex items-center justify-between pt-6" style="border-top: 1px solid var(--color-border);">
+        <NuxtLink to="/" class="text-sm no-underline hover:underline" style="color: var(--color-text-secondary);">
+          ← ホームに戻る
+        </NuxtLink>
+        <a
+          :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(post!.title)}&url=${encodeURIComponent(`https://blog.naokihaba.com/posts/${slug}`)}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium no-underline transition-opacity hover:opacity-80"
+          style="background-color: #000; color: #fff;"
+        >
+          <svg width="14" height="14" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/>
+          </svg>
+          Xでシェア
+        </a>
+      </div>
+      <UtterancesComments />
     </footer>
   </article>
 </template>

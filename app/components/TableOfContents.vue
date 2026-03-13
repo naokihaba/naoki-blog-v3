@@ -41,7 +41,7 @@ const flatLinks = computed(() => {
         <a
           :href="`#${heading.id}`"
           class="block text-sm hover:underline transition-colors"
-          :style="`color: ${heading.depth === 2 ? 'var(--color-text-primary)' : 'var(--color-text-secondary)'};`"
+          style="color: var(--color-text-primary);"
         >
           {{ heading.text }}
         </a>

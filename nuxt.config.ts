@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt/config"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@unocss/nuxt", "@nuxt/content"],
+  modules: ["@unocss/nuxt", "@nuxt/content", "nuxt-og-image"],
   routeRules: {
     "/blog/**": { redirect: { to: "/posts/**", statusCode: 301 } },
   },

@@ -7,17 +7,17 @@
   --color-text-secondary: #71717a;
   --color-border: #e4e4e7;
 
-  /* Primary - Purple */
-  --color-primary: #8b5cf6;
-  --color-primary-hover: #7c3aed;
+  /* Primary - Zinc */
+  --color-primary: #18181b;
+  --color-primary-hover: #3f3f46;
 
-  /* Accent - Light Purple */
-  --color-accent: #a78bfa;
-  --color-accent-hover: #8b5cf6;
+  /* Accent */
+  --color-accent: #3f3f46;
+  --color-accent-hover: #52525b;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-  --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  --gradient-primary: linear-gradient(135deg, #18181b 0%, #3f3f46 100%);
+  --gradient-accent: linear-gradient(135deg, #3f3f46 0%, #52525b 100%);
 
   /* Code */
   --color-code-bg: #fafafa;
@@ -53,12 +53,12 @@ ol {
   --color-text-primary: #fafafa;
   --color-text-secondary: #a1a1aa;
   --color-border: #3f3f46;
-  --color-primary: #c4b5fd;
-  --color-primary-hover: #ddd6fe;
-  --color-accent: #a78bfa;
-  --color-accent-hover: #c4b5fd;
-  --gradient-primary: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
-  --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  --color-primary: #fafafa;
+  --color-primary-hover: #e4e4e7;
+  --color-accent: #d4d4d8;
+  --color-accent-hover: #fafafa;
+  --gradient-primary: linear-gradient(135deg, #a1a1aa 0%, #fafafa 100%);
+  --gradient-accent: linear-gradient(135deg, #71717a 0%, #a1a1aa 100%);
   --color-code-bg: #18181b;
 }
 
@@ -127,10 +127,8 @@ ol {
 }
 
 .prose a {
-  color: var(--color-text-primary);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
+  color: var(--color-primary);
+  text-decoration: none;
   transition: opacity 0.15s;
 }
 
