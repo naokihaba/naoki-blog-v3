@@ -21,11 +21,7 @@ useSeoMeta({
   twitterDescription: () => post.value?.description,
 });
 
-defineOgImage("SimpleBlog", {
-  title: post.value?.title,
-  description: post.value?.description,
-  siteName: "naokihaba blog",
-});
+defineOgImage("BlogCard");
 
 const tocLinks = computed(() => post.value?.body?.toc?.links ?? []);
 
