@@ -1,8 +1,13 @@
 # build output
 dist/
+.output/
 
 # generated types
 .astro/
+.nuxt/
+
+# data
+.data/
 
 # dependencies
 node_modules/

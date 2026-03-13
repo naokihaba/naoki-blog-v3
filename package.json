@@ -1,37 +1,32 @@
 {
-  "name": "naoki-blog-v3",
+  "name": "blog",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build && pnpm pagefind",
-    "pagefind": "pagefind --site dist --output-path dist/pagefind",
-    "preview": "astro preview",
-    "astro": "astro",
-    "deploy": "wrangler deploy",
-    "deploy:build": "pnpm build && pnpm deploy",
-    "lint:text": "textlint \"src/content/**/*.{md,mdx}\"",
-    "lint:text:fix": "textlint --fix \"src/content/**/*.{md,mdx}\""
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "prepare": "vp config"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
-    "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
-    "astro-icon": "^1.1.5",
-    "p5": "^2.2.2",
-    "tailwindcss": "^4.1.18",
-    "unist-util-visit": "^5.1.0"
+    "@nuxt/content": "^3.12.0",
+    "better-sqlite3": "^12.6.2",
+    "nuxt": "^4.4.2"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.90",
-    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.1",
-    "pagefind": "^1.4.0",
-    "satori": "^0.19.2",
-    "sharp": "^0.34.5",
-    "textlint": "^15.5.1",
-    "wrangler": "^4.65.0"
+    "@unocss/nuxt": "^66.6.6",
+    "unocss": "^66.6.6",
+    "vite-plus": "latest"
+  },
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    },
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }
